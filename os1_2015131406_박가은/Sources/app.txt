@@ -1,0 +1,43 @@
+#include<unistd.h>
+#include<stdio.h>
+
+#define gaeunfalo_stack_push 335
+#define gaeunfalo_stack_pop 336
+
+int main()
+{
+	int i;
+	int top = -1;
+	
+	for(i = 0; i < 5; i++)
+	{
+		int a;
+		a = syscall(gaeunfalo_stack_push, (i + 1) / 2);
+		if(a == -1)
+		{
+			printf("Push: Error\n");
+		}
+		else
+		{
+			printf("Push: %d\n", a);
+			top++;
+		}
+	}
+
+	for(i = top; i >= -1; i--)
+	{
+		int a;
+		a = syscall(gaeunfalo_stack_pop);
+		if(a == -1)
+		{
+			printf("Pop: Error\n");
+		}
+		else
+		{
+			printf("Pop: %d\n", a);
+			top--;
+		}
+	}
+
+	return 0;
+}

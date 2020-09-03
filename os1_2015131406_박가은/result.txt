@@ -1,0 +1,57 @@
+//application result
+
+gaeunfalo@gaeunfalo-VirtualBox:~$ ./app_gaeunfalo
+Push: 0
+Push: 1
+Push: Error
+Push: 2
+Push: Error
+Pop: 2
+Pop: 1
+Pop: 0
+Pop: Error
+
+//kernel result
+
+[   32.224687] [System Call] gaeunfalo_push(): ---- 0
+[   32.224688] Stack Top----------
+[   32.224689] 0
+[   32.224689] Stack Bottom----------
+[   32.224744] [System Call] gaeunfalo_push(): ---- 1
+[   32.224745] Stack Top----------
+[   32.224745] 1
+[   32.224745] 0
+[   32.224746] Stack Bottom----------
+[   32.224747] [System Call] gaeunfalo_push(): ---- Error
+[   32.224748] Stack Top----------
+[   32.224748] 1
+[   32.224748] 0
+[   32.224749] Stack Bottom----------
+[   32.224750] [System Call] gaeunfalo_push(): ---- 2
+[   32.224750] Stack Top----------
+[   32.224751] 2
+[   32.224751] 1
+[   32.224751] 0
+[   32.224752] Stack Bottom----------
+[   32.224753] [System Call] gaeunfalo_push(): ---- Error
+[   32.224753] Stack Top----------
+[   32.224753] 2
+[   32.224754] 1
+[   32.224754] 0
+[   32.224754] Stack Bottom----------
+[   32.224756] [System Call] gaeunfalo_pop(): ---- 2
+[   32.224756] Stack Top----------
+[   32.224756] 1
+[   32.224756] 0
+[   32.224757] Stack Bottom----------
+[   32.224758] [System Call] gaeunfalo_pop(): ---- 1
+[   32.224758] Stack Top----------
+[   32.224758] 0
+[   32.224759] Stack Bottom----------
+[   32.224760] [System Call] gaeunfalo_pop(): ---- 0
+[   32.224760] Stack Top----------
+[   32.224760] Stack Bottom----------
+[   32.224761] [System Call] gaeunfalo_pop(): ---- Error
+[   32.224762] Stack Top----------
+[   32.224762] Stack Bottom----------
+gaeunfalo@gaeunfalo-VirtualBox:~$ 

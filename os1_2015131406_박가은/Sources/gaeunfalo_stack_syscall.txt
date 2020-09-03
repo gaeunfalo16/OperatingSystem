@@ -1,0 +1,86 @@
+#include<linux/syscalls.h>
+#include<linux/kernel.h>
+#include<linux/linkage.h>
+
+#define MAXSIZE 1000
+
+int stack[MAXSIZE];
+int top = -1;
+
+SYSCALL_DEFINE1(gaeunfalo_push, int, a)
+{
+	if(top == -1) // if stack is empty, Push 'a'
+	{
+		stack[++top] = a;
+		printk(KERN_INFO "[System Call] gaeunfalo_push(): ---- %d", a); // Print stack in Kernel
+		printk("Stack Top----------\n");
+		int j; // to print stack in Kernel 
+		for(j = top; j >= 0; j--)
+		{
+			printk("%d\n", stack[j]);
+		}
+		printk("Stack Bottom----------\n");
+		return a;
+	}
+
+	else if(top != MAXSIZE - 1) // If stack is not full
+	{
+		int i; // To check whether there exists overlapped value in stack or not 
+
+		for(i = 0; i <= top; i++)
+		{
+			if(stack[i] == a) // If there is already same value with a, then print Error
+			{
+				printk(KERN_INFO "[System Call] gaeunfalo_push(): ---- Error");
+				printk("Stack Top----------\n");
+				int j;
+				for(j = top; j >= 0; j--)
+				{
+					printk("%d", stack[j]);
+				}
+				printk("Stack Bottom----------\n");
+				return -1;
+			}
+		}
+		stack[++top] = a; // If there isn't, stack[top] = a
+		printk(KERN_INFO "[System Call] gaeunfalo_push(): ---- %d");
+		printk("Stack Top----------\n");
+		int j;
+		for(j = top; j >= 0; j--)
+		{
+			printk("%d", stack[j]);
+		}
+		printk("Stack Bottom----------\n");
+		return a;
+	}
+	printk(KERN_INFO "[System Call] gaeunfalo_push(): ---- Error");
+	printk("Stack Top----------\n");
+	int j;
+	for(j = top; j >= 0; j--)
+	{
+		printk("%d", stack[j]);
+	}
+	printk("Stack Bottom----------\n");
+	return -1; // Stack is already full
+}
+
+SYSCALL_DEFINE0(gaeunfalo_pop)
+{
+	if(top == -1) // If stack is empty, print Error
+	{
+		printk(KERN_INFO "[System Call] gaeunfalo_pop(): ---- Error");
+		printk("Stack Top----------\n");
+		printk("Stack Bottom----------\n");
+		return -1;
+	}
+	
+	printk(KERN_INFO "[System Call] gaeunfalo_pop(): ---- %d", stack[top]);
+	printk("Stack Top----------\n");
+	int j;
+	for(j = top; j >= 0; j--)
+	{
+		printk("%d", stack[j]);
+	}
+	printk("Stack Bottom----------\n");
+	return stack[top--]; // If stack is not empty, pop stack[top]
+}
